@@ -3,12 +3,36 @@
   "WorkspaceRootPath": "C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2B72DB4A-7BA4-4F84-BA69-8F3336E9257A}|..\\..\\..\\..\\..\\AppData\\Roaming\\Microsoft\\VisualStudio\\17.0_3240ba9e\\SingleFileISense\\_sfi_34ce0f9d-4e3e-4047-aaf5-2b7b09fadbf4_.vcxproj|C:\\USERS\\MARTA\\ONEDRIVE\\DOCUMENTOS\\GITHUB\\DAMES-411-02\\DAMES (PROJECTE VS)\\MOVIMENT.H||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{2B72DB4A-7BA4-4F84-BA69-8F3336E9257A}|..\\..\\..\\..\\..\\AppData\\Roaming\\Microsoft\\VisualStudio\\17.0_3240ba9e\\SingleFileISense\\_sfi_34ce0f9d-4e3e-4047-aaf5-2b7b09fadbf4_.vcxproj|solutionrelative:MOVIMENT.H||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Moviment.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Moviment.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Tauler.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Tauler.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Tauler.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Tauler.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Moviment.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Moviment.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Posicio.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Posicio.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Posicio.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Posicio.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Fitxa.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Fitxa.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Fitxa.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Fitxa.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -29,21 +53,12 @@
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Moviment.h",
-              "DocumentMoniker": "C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Moviment.h",
-              "RelativeDocumentMoniker": "Moviment.h",
-              "ToolTip": "C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Moviment.h",
-              "RelativeToolTip": "Moviment.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-04-11T09:56:06.421Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Moviment.cpp",
               "DocumentMoniker": "C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Moviment.cpp",
               "RelativeDocumentMoniker": "Moviment.cpp",
@@ -52,6 +67,97 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-04-11T09:55:53.478Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Tauler.h",
+              "DocumentMoniker": "C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Tauler.h",
+              "RelativeDocumentMoniker": "Tauler.h",
+              "ToolTip": "C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Tauler.h",
+              "RelativeToolTip": "Tauler.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-04-24T17:59:52.156Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Tauler.cpp",
+              "DocumentMoniker": "C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Tauler.cpp",
+              "RelativeDocumentMoniker": "Tauler.cpp",
+              "ToolTip": "C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Tauler.cpp",
+              "RelativeToolTip": "Tauler.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-04-24T17:59:53.207Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Moviment.h",
+              "DocumentMoniker": "C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Moviment.h",
+              "RelativeDocumentMoniker": "Moviment.h",
+              "ToolTip": "C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Moviment.h",
+              "RelativeToolTip": "Moviment.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-04-11T09:56:06.421Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Posicio.h",
+              "DocumentMoniker": "C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Posicio.h",
+              "RelativeDocumentMoniker": "Posicio.h",
+              "ToolTip": "C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Posicio.h",
+              "RelativeToolTip": "Posicio.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-04-24T17:59:54.85Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Posicio.cpp",
+              "DocumentMoniker": "C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Posicio.cpp",
+              "RelativeDocumentMoniker": "Posicio.cpp",
+              "ToolTip": "C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Posicio.cpp",
+              "RelativeToolTip": "Posicio.cpp",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAcwCoAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-04-24T17:59:56.023Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Fitxa.h",
+              "DocumentMoniker": "C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Fitxa.h",
+              "RelativeDocumentMoniker": "Fitxa.h",
+              "ToolTip": "C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Fitxa.h",
+              "RelativeToolTip": "Fitxa.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-04-24T17:59:59.087Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Fitxa.cpp",
+              "DocumentMoniker": "C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Fitxa.cpp",
+              "RelativeDocumentMoniker": "Fitxa.cpp",
+              "ToolTip": "C:\\Users\\marta\\OneDrive\\Documentos\\GitHub\\DAMES-411-02\\dames (projecte vs)\\Fitxa.cpp",
+              "RelativeToolTip": "Fitxa.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-04-24T18:00:00.279Z",
               "EditorCaption": ""
             }
           ]

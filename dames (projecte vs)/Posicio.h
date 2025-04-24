@@ -12,6 +12,7 @@ public:
 	Posicio(int fila, int columna) { m_fila = fila; m_columna = columna; }
 	bool operator==(const Posicio& posicio) const; //comparar dos posicions
 
+	bool esValida() const;
 	void fromString(const string& posicio); 
 	string toString() const;
 

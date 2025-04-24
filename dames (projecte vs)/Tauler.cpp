@@ -41,6 +41,7 @@ void Tauler::inicialitza(const string& nomFitxer)
 	}
 	fitxer.close();
 }
+
 void Tauler::actualitzaMovimentsValids() const
 {
 	comproVarDama();
@@ -56,7 +57,7 @@ void Tauler::actualitzaMovimentsValids() const
 
 }
 
-/*
+
 void escriuTauler(const string& nomFitxer, char tauler[N_FILES][N_COLUMNES])
 {
 	ofstream fitxer(nomFitxer);
@@ -76,4 +77,39 @@ void escriuTauler(const string& nomFitxer, char tauler[N_FILES][N_COLUMNES])
 	}
 	fitxer.close();
 }
-*/
+
+bool Tauler::mouFitxa(const Posicio& origen, const Posicio& desti)
+{
+	//primer verifiquem que el mov es valid (abans de moure la fitxa) 
+	if (!movimentValid(origen, desti))
+	{
+		return false;
+	}
+}
+
+bool Tauler::movimentValid(const Posicio& origen, const Posicio desti) const
+{
+	//verifiquem que les posicion estan al tauler
+	if (!origen.esValida() || !desti.esValida())
+	{
+		return false;
+	}
+
+	//comprovem si en la posicio origen hi ha alguna fitxa
+	Fitxa fitxaOrigen = m_tauler[origen.getFila()][origen.getColumna()];
+
+	if (fitxaOrigen.getTipus() == TIPUS_EMPTY)
+	{
+		return false; //no hi ha cap fitxa per moure
+	}
+
+}
+
+void Tauler::bufarFitxa(int fila, int columna) //elimina fitxa del jugador
+{
+	//fem una comprovacio per asegurarnos que no surt dels limitis
+	if (fila >= 0 && fila < N_FILES && columna >= 0 && columna < N_COLUMNES)
+	{
+		m_tauler[fila][columna].setTipus(TIPUS_EMPTY);
+	}
+}
