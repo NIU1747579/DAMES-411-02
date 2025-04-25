@@ -7,7 +7,7 @@ class Moviment
 {
 public:
 	//CADA FITXA TE UNS MOVIMENT VALIDS, ELS MOVIMENTS HAN DE SER DE FITXA
-	Moviment() {};
+	Moviment() : m_nCaptures(0) {}
 
 	void setOrigen(const Posicio& o) { origen = o; }
 	void setDesti(const Posicio& d) { desti = d; }
@@ -23,7 +23,8 @@ public:
 	//Metode 3: diagonal inf dreta
 	//Mtode 4: diagonal inf esq
 private:
-	Posicio origen;
-	Posicio desti;
-	Posicio fitxacapturada; //nomes volem guardar una captura per moviment
+	Posicio m_origen; //nomes volem guardar una captura per moviment
+	Posicio m_desti;
+	Posicio m_capturades[12]; //max de captures en un moviment
+	int m_nCaptures;
 };

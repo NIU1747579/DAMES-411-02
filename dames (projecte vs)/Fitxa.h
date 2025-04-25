@@ -19,17 +19,14 @@ typedef enum
 class Fitxa
 {
 public:
-	Fitxa();
-	Fitxa() {}
-	void calcularMovimentValids(); //????????????????
+	Fitxa() : tipus_Fitxa(TIPUS_EMPTY) {} //COLOR_FITXA?
+	//void calcularMovimentValids(); //????????????????
 	void convertirADama();
 	bool esBuida() const { return (tipus_Fitxa == TIPUS_EMPTY); } //per comprovar si la casella esta buida - Per el metode movimentValid
 	bool esContraria(const Fitxa& contrari);
 
-
 	TipusFitxa getTipus() const { return tipus_Fitxa; }
 	ColorFitxa getColor()const { return color_Fitxa; }
-	Posicio getPosicioActual()const { return posicio_Actual; }
 
 	void setTipus(const TipusFitxa& tipus) { tipus_Fitxa = tipus; }
 	void setColor(const ColorFitxa& color) { color_Fitxa = color; }
@@ -38,7 +35,6 @@ public:
 private:
 	TipusFitxa tipus_Fitxa;
 	ColorFitxa color_Fitxa;
-	Posicio posicio_Actual; // esta duplicado en la classe tauler y no sabemos q hacer
 	Moviment movimentValids[100];//?
 };
 
