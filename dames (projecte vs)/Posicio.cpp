@@ -15,10 +15,10 @@ ofstream& operator<<(ofstream& fitxer, const Posicio& posicio)
 	return fitxer;
 }
 
-void Posicio::fromString(const string& pos) 
-{ 
+void Posicio::fromString(const string& pos)
+{
 	m_fila = (N_FILES - 1) - (pos[1] - '1');
-	m_columna = pos[0] - 'a'; 
+	m_columna = pos[0] - 'a';
 }
 
 ifstream& operator>>(ifstream& fitxer, Posicio& posicio)

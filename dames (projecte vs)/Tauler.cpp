@@ -89,19 +89,28 @@ bool Tauler::mouFitxa(const Posicio& origen, const Posicio& desti)
 
 bool Tauler::movimentValid(const Posicio& origen, const Posicio desti) const
 {
-	//verifiquem que les posicion estan al tauler
+	//verifiquem que les posicion estan al tauler - son valides
 	if (!origen.esValida() || !desti.esValida())
 	{
 		return false;
 	}
-
-	//comprovem si en la posicio origen hi ha alguna fitxa
+	//verifiquem que hi ha fitxa a lorigen i despres que no hi ha al desti
 	Fitxa fitxaOrigen = m_tauler[origen.getFila()][origen.getColumna()];
+	if (fitxaOrigen.esBuida()) return false;
+	Fitxa fitxaDesti = m_tauler[desti.getFila()][desti.getColumna()];
+	if (!fitxaDesti.esBuida()) return false;
 
-	if (fitxaOrigen.getTipus() == TIPUS_EMPTY)
-	{
-		return false; //no hi ha cap fitxa per moure
-	}
+	Moviment mov;
+	mov.setOrigen(origen);
+	mov.setDesti(desti);
+
+	//verifiquem si el moviment que volem dur a terme es diagonal o no
+	if (!mov.esMovimentDiagonal()) return false;
+
+	//fer TIPUS_NORMAL
+
+
+	//fer TIPUS_DAMA
 
 }
 

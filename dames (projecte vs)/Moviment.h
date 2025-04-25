@@ -9,22 +9,24 @@ public:
 	//CADA FITXA TE UNS MOVIMENT VALIDS, ELS MOVIMENTS HAN DE SER DE FITXA
 	Moviment() : m_nCaptures(0) {}
 
-	void setOrigen(const Posicio& o) { origen = o; }
-	void setDesti(const Posicio& d) { desti = d; }
-	void setFitxaCapturada(const Posicio& p) { fitxacapturada = p; }
+	void setOrigen(const Posicio& o) { m_origen = o; }
+	void setDesti(const Posicio& d) { m_desti = d; }
+	void afegirCaptura(const Posicio& c);
 
-	Posicio getOrigen() const { return origen; }
-	Posicio getDesti() const { return desti; }
-	Posicio getFitxaCapturada() const { return fitxacapturada; }
+	Posicio getOrigen() const { return m_origen; }
+	Posicio getDesti() const { return m_desti; }
+	int getNCaptures() const { return m_nCaptures; }
+	Posicio getCaptures(int i) { return m_captures[i]; }
+	//metode per comprovar des de movimentValids, si el mov. que es vol 
+	//realitzar es diagonal
+	bool esMovimentDiagonal() const;
+	bool esDireccioCorrecta(TipusFitxa tipus, ColorFitxa color) const;
+	bool esMovimentNormalValid(TipusFitxa tipus, ColorFitxa color) const;
+	Posicio getPosicioCaptura() const; //retorna la posicio de la fitxa capturada
 
-	//metodes per calcular les posicions dels moviments
-	//Metode 1: diagonal dreta
-	//Metode 2: diagonal esperra
-	//Metode 3: diagonal inf dreta
-	//Mtode 4: diagonal inf esq
 private:
 	Posicio m_origen; //nomes volem guardar una captura per moviment
 	Posicio m_desti;
-	Posicio m_capturades[12]; //max de captures en un moviment
+	Posicio m_captures[12]; //max de captures en un moviment
 	int m_nCaptures;
 };

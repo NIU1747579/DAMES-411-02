@@ -8,12 +8,12 @@ int const N_COLUMNES = 8;
 class Posicio
 {
 public:
-	Posicio(): m_fila(0), m_columna(0) {}
+	Posicio() : m_fila(0), m_columna(0) {}
 	Posicio(int fila, int columna) { m_fila = fila; m_columna = columna; }
 	bool operator==(const Posicio& posicio) const; //comparar dos posicions
 
 	bool esValida() const;
-	void fromString(const string& posicio); 
+	void fromString(const string& posicio);
 	string toString() const;
 
 	int getFila()const { return m_fila; }
