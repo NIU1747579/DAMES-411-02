@@ -44,17 +44,16 @@ void Tauler::inicialitza(const string& nomFitxer)
 
 void Tauler::actualitzaMovimentsValids() const
 {
-	comproVarDama();
-	inicialitzamoviments();
-	do {
-		obtenirSeguentMovimentPendent();
-		calcularPosicionsDesDeMoviment();
-
-		//tenenr en uenta si has matado o no
-
-	} while ()
-
-
+	for (int i = 0; i < N_FILES; i++)
+{
+	for (int j = 0; j < N_COLUMNES; j++)
+	{
+		if (m_tauler[i][j].getTipus() != TIPUS_EMPTY) 
+		{
+			m_tauler[i][j].getMoviments().actualitzaMoviments(i,j, m_tauler[i][j].getTipus(), m_tauler[i][j].getColor());
+		}
+	}
+}
 }
 
 
