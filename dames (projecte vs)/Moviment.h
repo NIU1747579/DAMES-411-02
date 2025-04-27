@@ -24,9 +24,20 @@ public:
 	bool esMovimentNormalValid(TipusFitxa tipus, ColorFitxa color) const;
 	Posicio getPosicioCaptura() const; //retorna la posicio de la fitxa capturada
 
+	void actualitzaMovimentsNN(int fila, int columna);
+	void actualitzaMovimentsND(int fila, int columna);
+	void actualitzaMovimentsBN(int fila, int columna);
+	void actualitzaMovimentsBD(int fila, int columna);
+
+	void inicialitza();
+
 private:
 	Posicio m_origen; //nomes volem guardar una captura per moviment
 	Posicio m_desti;
 	Posicio m_captures[12]; //max de captures en un moviment
 	int m_nCaptures;
+
+	string m_movimentsValids[100];
+	string m_movimentsActuals[100];
+
 };
