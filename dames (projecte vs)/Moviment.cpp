@@ -17,3 +17,23 @@ bool Moviment::esMovimentDiagonal() const
 	else
 		return false;
 }
+
+void Moviment::actualitzaMovimentsNN(int fila, int columna)
+{
+	m_movimentsValids.inicialitza();
+}
+
+void Moviment::actualitzaMovimentsND(int fila, int columna)
+{
+
+}
+
+void Moviment::actualitzaMovimentsBN(int fila, int columna)
+{
+
+}
+
+void Moviment::actualitzaMovimentsBD(int fila, int columna)
+{
+
+}
