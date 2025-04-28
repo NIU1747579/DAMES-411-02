@@ -37,7 +37,7 @@ bool Posicio::operator==(const Posicio& posicio) const
 
 bool Posicio::esValida() const
 {
-	// Verificar que les posicions estan dintre del tauler
+	//verificar que les posicions estan dintre del tauler
 	return ((m_fila >= 0) && (m_fila < N_FILES)
 		&& (m_columna >= 0) && (m_columna < N_COLUMNES));
 }
