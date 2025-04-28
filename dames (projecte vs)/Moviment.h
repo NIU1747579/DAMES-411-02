@@ -13,20 +13,34 @@ public:
 	void setDesti(const Posicio& d) { m_desti = d; }
 	void afegirCaptura(const Posicio& c);
 
+	int getNMoviments() const { return nMovimentsValids; }
+	Moviment getMoviment(int index) const { return m_movimentsValids[index]; }
+
 	Posicio getOrigen() const { return m_origen; }
 	Posicio getDesti() const { return m_desti; }
 	int getNCaptures() const { return m_nCaptures; }
 	Posicio getCaptures(int i) { return m_captures[i]; }
-	//metode per comprovar des de movimentValids, si el mov. que es vol 
-	//realitzar es diagonal
-	bool esMovimentDiagonal() const;
-	bool esDireccioCorrecta(TipusFitxa tipus, ColorFitxa color) const;
-	bool esMovimentNormalValid(TipusFitxa tipus, ColorFitxa color) const;
+	//metode per compr ovar des de movimentValids, si el mov. que es vol 
+	//bool esMovimentDiagonal() const;
+
 	Posicio getPosicioCaptura() const; //retorna la posicio de la fitxa capturada
 
+	void actualitzaMovimentsNN(int fila, int columna);
+	void actualitzaMovimentsND(int fila, int columna);
+	void actualitzaMovimentsBN(int fila, int columna);
+	void actualitzaMovimentsBD(int fila, int columna);
+
+	void inicialitza();
+
 private:
+	//nose si cal
 	Posicio m_origen; //nomes volem guardar una captura per moviment
 	Posicio m_desti;
 	Posicio m_captures[12]; //max de captures en un moviment
 	int m_nCaptures;
+
+	Moviment m_movimentsValids[100];
+	int nMovimentsValids;
+
+
 };

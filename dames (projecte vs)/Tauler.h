@@ -17,13 +17,11 @@ public:
 	void inicialitza(const string& nomFitxer);
 	void actualitzaMovimentsValids() const;
 	bool mouFitxa(const Posicio& origen, const Posicio& desti);
-	void getPosicionsPossibles(const Posicio& origen, int& nPosicions, Posicio posicionsPossibles[]);
 
-	bool movimentValid(const Posicio& origen, const Posicio desti)const;
+	void getPosicionsPossibles(const Posicio& origen, int& nPosicions, Posicio posicionsPossibles[]);
+	bool esMovimentValid(int filaOrigen, int colOrigen, int filaDesti, int colDesti);
 	void bufarFitxa(int fila, int columna);
 	string ToString() const; //mostrar en pantalla lestat actual del tauler
-	Posicio seleccioFitxa(); //per seleccionar la fitxa amb la que volem jugar - guardem la posicio en fitxaTriada
-
 
 private:
 	Fitxa m_tauler[N_FILES][N_COLUMNES];
