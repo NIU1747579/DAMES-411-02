@@ -37,4 +37,5 @@ void Moviment::actualitzaMovimentsBD(int fila, int columna)
 {
 
 }
+
 */

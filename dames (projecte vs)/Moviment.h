@@ -42,5 +42,9 @@ private:
 	Moviment m_movimentsValids[100];
 	int nMovimentsValids;
 
+	//string m_movimentsValids[100];
+	//string m_movimentsActuals[100];
+
 
 };
+

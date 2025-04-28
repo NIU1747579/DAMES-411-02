@@ -23,15 +23,20 @@ public:
 
 	void setTipus(const TipusFitxa& tipus) { tipus_Fitxa = tipus; }
 	void setColor(const ColorFitxa& color) { color_Fitxa = color; }
+	
+	void calcularMovimentValids(); //????????????????
+
+	void convertirADama();
+	bool esBuida() const { return (tipus_Fitxa == TIPUS_EMPTY); } //per comprovar si la casella esta buida - Per el metode movimentValid
+	bool esContraria(const Fitxa& contrari);
 
 	TipusFitxa getTipus() const { return tipus_Fitxa; }
 	ColorFitxa getColor()const { return color_Fitxa; }
 
-	void convertirADama();
-	bool esBuida() const { return (tipus_Fitxa == TIPUS_EMPTY); } //per comprovar si la casella esta buida - Per el metode movimentValid
-	bool esContraria(const Fitxa& contrari) const;
-
 	Moviment getMoviments()const { return moviments; }
+
+	void setTipus(const TipusFitxa& tipus) { tipus_Fitxa = tipus; }
+	void setColor(const ColorFitxa& color) { color_Fitxa = color; }
 
 private:
 	TipusFitxa tipus_Fitxa;

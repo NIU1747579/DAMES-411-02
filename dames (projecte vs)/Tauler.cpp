@@ -54,7 +54,16 @@ void Tauler::actualitzaMovimentsValids() const
 			}
 		}
 	}
+{
+	for (int j = 0; j < N_COLUMNES; j++)
+	{
+		if (m_tauler[i][j].getTipus() != TIPUS_EMPTY) 
+		{
+			m_tauler[i][j].getMoviments().actualitzaMoviments(i,j, m_tauler[i][j].getTipus(), m_tauler[i][j].getColor());
+		}
+	}
 }
+
 
 void escriuTauler(const string& nomFitxer, char tauler[N_FILES][N_COLUMNES])
 {
@@ -316,4 +325,51 @@ void Tauler::getPosicionsPossibles(const Posicio& origen, int& nPosicions, Posic
 			nPosicions++;
 		}
 	}
+}
+
+
+string Tauler::ToString() const
+{
+	string resultat;
+	int num = 8;
+
+	for (int i = 0; i < N_FILES; i++)
+	{
+		resultat += num + ": ";
+		for (int j = 0; j < N_COLUMNES; j++)
+		{
+			if (m_tauler[N_FILES][N_COLUMNES].getColor() == COLOR_NEGRE)
+			{
+				if (m_tauler[N_FILES][N_COLUMNES].getTipus() == TIPUS_NORMAL) {
+					resultat += 'X ';
+				}
+				else
+				{
+					resultat += 'R ';
+				}
+				
+			}
+
+			else {
+				if (m_tauler[N_FILES][N_COLUMNES].getColor() == COLOR_BLANC)
+				{
+					if (m_tauler[N_FILES][N_COLUMNES].getTipus() == TIPUS_NORMAL) {
+						resultat += 'O ';
+					}
+					else
+					{
+						resultat += 'D ';
+					}
+				}
+
+				else {
+					resultat += '_ ';
+				}
+			}
+		}
+		num--;
+		resultat += "\n";
+	}
+	resultat += "  A B C D E F G H";
+	return resultat;
 }
