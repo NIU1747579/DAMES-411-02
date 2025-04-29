@@ -33,13 +33,15 @@ public:
 	TipusFitxa getTipus() const { return tipus_Fitxa; }
 	ColorFitxa getColor()const { return color_Fitxa; }
 
-	Moviment getMoviments()const { return moviments; }
+	int getNumMoviments() const { return m_numMoviments; };
+	Moviment getMoviment(int index) const { return m_movimentsValids[index]; };
 
-	void setTipus(const TipusFitxa& tipus) { tipus_Fitxa = tipus; }
-	void setColor(const ColorFitxa& color) { color_Fitxa = color; }
+	void netejaMovimentsValids();
+	void afegeixMovimentValid(const Moviment& moviment);
 
 private:
 	TipusFitxa tipus_Fitxa;
 	ColorFitxa color_Fitxa;
-	Moviment moviments;//mov valids de la fitxa
+	Moviment m_movimentsValids[20];
+	int m_numMoviments;
 };
