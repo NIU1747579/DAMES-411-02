@@ -7,7 +7,7 @@ class Moviment
 {
 public:
 	//CADA FITXA TE UNS MOVIMENT VALIDS, ELS MOVIMENTS HAN DE SER DE FITXA
-	Moviment() : m_nCaptures(0) {}
+	Moviment() : m_nCaptures(0),  m_numCaptures(0) {}
 
 	void setOrigen(const Posicio& o) { m_origen = o; }
 	void setDesti(const Posicio& d) { m_desti = d; }
@@ -25,26 +25,24 @@ public:
 
 	Posicio getPosicioCaptura() const; //retorna la posicio de la fitxa capturada
 
-	void actualitzaMovimentsNN(int fila, int columna);
-	void actualitzaMovimentsND(int fila, int columna);
-	void actualitzaMovimentsBN(int fila, int columna);
-	void actualitzaMovimentsBD(int fila, int columna);
-
-	void inicialitza();
+	Posicio getUltimaPosicio() const;
+	void afegirCaptura(const Posicio& captura);
+	void afegirPosicio(const Posicio& pos);
+	Posicio getPosicio(int index) const { return m_posicions[index]; };
+	int getNumPosicions() const { return m_numPosicions; };
 
 private:
 	//nose si cal
 	Posicio m_origen; //nomes volem guardar una captura per moviment
 	Posicio m_desti;
+
 	Posicio m_captures[12]; //max de captures en un moviment
-	int m_nCaptures;
+	int m_numCaptures;
 
-	Moviment m_movimentsValids[100];
-	int nMovimentsValids;
+	Posicio m_posicions[20]; 
+	int m_nPosicions;
 
-	//string m_movimentsValids[100];
-	//string m_movimentsActuals[100];
-
+	
 
 };
 
