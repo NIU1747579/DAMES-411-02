@@ -23,6 +23,8 @@ public:
 	void bufarFitxa(int fila, int columna);
 	string ToString() const; //mostrar en pantalla lestat actual del tauler
 
+	void obtenirPosicionsPossibles(int fila, int col, Posicio posicions[], int& numPosicions);
+
 private:
 	Fitxa m_tauler[N_FILES][N_COLUMNES];
 	Posicio fitxaTriada;
