@@ -8,18 +8,6 @@ void Moviment::afegirCaptura(const Posicio& c)
 	}
 }
 
-/*bool Moviment::esMovimentDiagonal() const
-{
-	int res_fila = abs(m_desti.getFila() - m_origen.getFila());
-	int res_columna = abs(m_desti.getColumna() - m_origen.getColumna());
-	if (res_fila == res_columna)
-		return true;
-	else
-		return false;
-}
-
-*/
-
 void Moviment::afegirPosicio(const Posicio& pos) {
 	if (m_numPosicions < 20) {
 		m_posicions[m_numPosicions] = pos;
