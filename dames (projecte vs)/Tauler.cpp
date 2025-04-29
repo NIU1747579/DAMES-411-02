@@ -301,11 +301,12 @@ void Tauler::bufarFitxa(int fila, int columna) //elimina fitxa del jugador
 string Tauler::toString() const
 {
 	string resultat;
-	int num = 8;
+	int num[8] = { 8, 7, 6, 5, 4, 3, 2, 1 };
 
 	for (int i = 0; i < N_FILES; i++)
 	{
-		resultat += num + ": ";
+		resultat += num[i];
+		resultat += ": ";
 		for (int j = 0; j < N_COLUMNES; j++)
 		{
 			if (m_tauler[i][j].getColor() == COLOR_NEGRE)
@@ -315,7 +316,12 @@ string Tauler::toString() const
 				}
 				else
 				{
-					resultat += "R ";
+					if (m_tauler[i][j].esBuida()) {
+						resultat += "_ ";
+
+					} else {
+						resultat += "R ";
+					}
 				}
 
 			}
@@ -331,16 +337,17 @@ string Tauler::toString() const
 						resultat += "D ";
 					}
 				}
-
 				else {
-					resultat += "_ ";
+					if (m_tauler[i][j].esBuida()) {
+						resultat += "_ ";
+
+					}
 				}
 			}
 		}
-		num--;
 		resultat += "\n";
 	}
-	resultat += "  A B C D E F G H";
+	resultat += "  a b c d e f g h";
 	return resultat;
 }
 
