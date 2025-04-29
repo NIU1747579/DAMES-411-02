@@ -42,28 +42,126 @@ void Tauler::inicialitza(const string& nomFitxer)
 	fitxer.close();
 }
 
-void Tauler::actualitzaMovimentsValids() const
-{
-	for (int i = 0; i < N_FILES; i++)
-	{
-		for (int j = 0; j < N_COLUMNES; j++)
-		{
-			if (m_tauler[i][j].getTipus() != TIPUS_EMPTY)
-			{
-				m_tauler[i][j].getMoviments().actualitzaMoviments(i, j, m_tauler[i][j].getTipus(), m_tauler[i][j].getColor());
+void Tauler::actualitzaMovimentsValids() {
+	for (int fila = 0; fila < N_FILES; fila++) {
+		for (int col = 0; col < N_COLUMNES; col++) {
+			Fitxa& fitxaActual = m_tauler[fila][col];
+
+			if (!fitxaActual.esBuida()) {
+				fitxaActual.netejaMovimentsValids();
+
+				Moviment movimentsValids[100]; 
+				int numMovimentsValids = 0;
+
+				Moviment movimentsPendents[100]; 
+				int numMovimentsPendents = 0;
+
+				Moviment movimentInicial;
+				movimentInicial.afegirPosicio(Posicio(fila, col));
+				movimentsPendents[numMovimentsPendents++] = movimentInicial;
+
+				while (numMovimentsPendents > 0) {
+					Moviment movimentActual = movimentsPendents[--numMovimentsPendents];
+					Posicio posicioActual = movimentActual.getUltimaPosicio();
+
+					Posicio posicionsPossibles[4];
+					int numPosicions = 0;
+					obtenirPosicionsPossibles(posicioActual.getFila(), posicioActual.getColumna(),
+						posicionsPossibles, numPosicions);
+
+					bool haAfegitMoviment = false;
+
+					for (int i = 0; i < numPosicions; i++) {
+						Posicio posDesti = posicionsPossibles[i];
+
+						if (esMovimentValid(posicioActual.getFila(), posicioActual.getColumna(),
+							posDesti.getFila(), posDesti.getColumna())) {
+
+							Moviment nouMoviment = movimentActual;
+							nouMoviment.afegirPosicio(posDesti);
+
+							if (abs(posDesti.getFila() - posicioActual.getFila()) == 2) {
+								// Calcular posición de la ficha capturada
+								int filaCaptura = (posicioActual.getFila() + posDesti.getFila()) / 2;
+								int colCaptura = (posicioActual.getColumna() + posDesti.getColumna()) / 2;
+								nouMoviment.afegirCaptura(Posicio(filaCaptura, colCaptura));
+
+								if (numMovimentsPendents < 100) {
+									movimentsPendents[numMovimentsPendents++] = nouMoviment;
+								}
+								haAfegitMoviment = true;
+							}
+							else {
+								if (numMovimentsValids < 100) {
+									movimentsValids[numMovimentsValids++] = nouMoviment;
+								}
+							}
+						}
+					}
+
+					if (!haAfegitMoviment && movimentActual.getNumPosicions() > 1) {
+						if (numMovimentsValids < 100) {
+							movimentsValids[numMovimentsValids++] = movimentActual;
+						}
+					}
+				}
+
+				for (int i = 0; i < numMovimentsValids; i++) {
+					fitxaActual.afegeixMovimentValid(movimentsValids[i]);
+				}
 			}
-		}
-	}
-{
-	for (int j = 0; j < N_COLUMNES; j++)
-	{
-		if (m_tauler[i][j].getTipus() != TIPUS_EMPTY) 
-		{
-			m_tauler[i][j].getMoviments().actualitzaMoviments(i,j, m_tauler[i][j].getTipus(), m_tauler[i][j].getColor());
 		}
 	}
 }
 
+void Tauler::obtenirPosicionsPossibles(int fila, int col, Posicio posicions[], int& numPosicions) {
+	numPosicions = 0;
+	Fitxa fitxa = m_tauler[fila][col];
+
+	if (fitxa.getTipus() == TIPUS_NORMAL) {
+		if (fitxa.getColor() == COLOR_BLANC) {
+			if (fila < N_FILES - 1) {
+				if (col > 0) {
+					posicions[numPosicions++] = Posicio(fila + 1, col - 1); 
+				}
+				if (col < N_COLUMNES - 1) {
+					posicions[numPosicions++] = Posicio(fila + 1, col + 1);
+				}
+			}
+		}
+		else {
+			if (fila > 0) {
+				if (col > 0) {
+					posicions[numPosicions++] = Posicio(fila - 1, col - 1);
+				}
+				if (col < N_COLUMNES - 1) {
+					posicions[numPosicions++] = Posicio(fila - 1, col + 1);
+				}
+			}
+		}
+	}
+	else if (fitxa.getTipus() == TIPUS_DAMA) {
+		const int direccions[4][2] = { {1,1}, {1,-1}, {-1,1}, {-1,-1} };
+
+		for (int d = 0; d < 4; d++) {
+			int df = direccions[d][0];
+			int dc = direccions[d][1];
+
+			for (int i = 1; i < N_FILES; i++) {
+				int nuevaFila = fila + i * df;
+				int nuevaCol = col + i * dc;
+
+				if (nuevaFila >= 0 && nuevaFila < N_FILES &&
+					nuevaCol >= 0 && nuevaCol < N_COLUMNES) {
+					posicions[numPosicions++] = Posicio(nuevaFila, nuevaCol);
+				}
+				else {
+					break; // Salir del bucle si salimos del tablero
+				}
+			}
+		}
+	}
+}
 
 void escriuTauler(const string& nomFitxer, char tauler[N_FILES][N_COLUMNES])
 {
