@@ -2,9 +2,9 @@
 
 void Moviment::afegirCaptura(const Posicio& c)
 {
-	if (m_nCaptures < 12)
+	if (m_numCaptures < 12)
 	{
-		m_captures[m_nCaptures++] = c;
+		m_captures[m_numCaptures++] = c;
 	}
 }
 
