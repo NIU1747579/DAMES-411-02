@@ -18,24 +18,18 @@ void Moviment::afegirCaptura(const Posicio& c)
 		return false;
 }
 
-void Moviment::actualitzaMovimentsNN(int fila, int columna)
-{
-	m_movimentsValids.inicialitza();
-}
-
-void Moviment::actualitzaMovimentsND(int fila, int columna)
-{
-
-}
-
-void Moviment::actualitzaMovimentsBN(int fila, int columna)
-{
-
-}
-
-void Moviment::actualitzaMovimentsBD(int fila, int columna)
-{
-
-}
-
 */
+
+void Moviment::afegirPosicio(const Posicio& pos) {
+	if (m_numPosicions < 20) {
+		m_posicions[m_numPosicions] = pos;
+		m_numPosicions++;
+	}
+}
+
+Posicio Moviment::getUltimaPosicio() const {
+	if (m_numPosicions > 0) {
+		return m_posicions[m_numPosicions - 1];
+	}
+	return Posicio(); // Devuelve posición inválida si no hay posiciones
+}
