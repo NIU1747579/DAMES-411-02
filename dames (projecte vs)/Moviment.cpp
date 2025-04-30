@@ -19,5 +19,5 @@ Posicio Moviment::getUltimaPosicio() const {
 	if (m_numPosicions > 0) {
 		return m_posicions[m_numPosicions - 1];
 	}
-	return Posicio(); // Devuelve posición inválida si no hay posiciones
+	return Posicio(); // Devuelve pos invalida si no hay posiciones
 }
