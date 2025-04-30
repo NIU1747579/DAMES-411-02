@@ -81,7 +81,7 @@ void Tauler::actualitzaMovimentsValids() {
 							nouMoviment.afegirPosicio(posDesti);
 
 							if (abs(posDesti.getFila() - posicioActual.getFila()) == 2) {
-								// Calcular posición de la ficha capturada
+								// Calcular pos de la ficha capturada
 								int filaCaptura = (posicioActual.getFila() + posDesti.getFila()) / 2;
 								int colCaptura = (posicioActual.getColumna() + posDesti.getColumna()) / 2;
 								nouMoviment.afegirCaptura(Posicio(filaCaptura, colCaptura));
@@ -348,6 +348,8 @@ string Tauler::toString() const
 	return resultat;
 }
 
+
+
 void Tauler::getPosicionsPossibles(const Posicio& origen, int& nPosicions, Posicio posicionsPossibles[])
 {
 	nPosicions = 0;
@@ -401,13 +403,36 @@ void Tauler::getPosicionsPossibles(const Posicio& origen, int& nPosicions, Posic
 
 
 /*
-nPosicions = 0;
+* nPosicions = 0;
+	int i = 0;
+
+	while (i < m_tauler[origen.getFila()][origen.getColumna()].getNumMoviments())
+	{
+		Moviment mov = m_tauler[origen.getFila()][origen.getColumna()].getMoviment(i);
+		int j = 0;
+		while (j < mov.getNumPosicions())
+		{
+			bool estaEnArray = false;
+			for (int x = 0; x < nPosicions; x++)
+			{
+				if (posicionsPossibles[x] == mov.getPosicio(j)) {
+					estaEnArray = true;
+				}
+			}
+			if (!estaEnArray)
+			{
+				posicionsPossibles[nPosicions++] = mov.getPosicio(j);
+			}
+
+		}
+	}
+	nPosicions = 0;
 	bool possible = true;
 
 	// Comprovem que la pos es valida i hi ha fitxa a lorigen
-	if (!origen.esValida() || m_tauler[origen.getFila()][origen.getColumna()].esBuida()) possible = false;
+	if (!origen.esValida() || m_tauler[origen.getFila()][origen.getColumna()].esBuida()) possible = false; 
 
-	Fitxa fitxa = m_tauler[origen.getFila()][origen.getColumna()];
+	Fitxa fitxa = m_tauler[origen.getFila()][origen.getColumna()]; 
 	Moviment moviments;
 
 	// Afegir totes les posicions desti uniques
@@ -427,4 +452,5 @@ nPosicions = 0;
 			posicionsPossibles[nPosicions] = desti;
 			nPosicions++;
 		}
+	}
 }*/
