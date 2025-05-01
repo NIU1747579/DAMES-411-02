@@ -1,5 +1,7 @@
 #include "tauler.hpp"
 
+
+// Inicializa el tablero del juego a partir de un fichero
 void Tauler::inicialitza(const string& nomFitxer)
 {
 	ifstream fitxer(nomFitxer);
@@ -42,94 +44,22 @@ void Tauler::inicialitza(const string& nomFitxer)
 	fitxer.close();
 }
 
-void Tauler::canviem(Posicio origen, Posicio& desti) {
-	Fitxa& fitxa = m_tauler[origen.getFila()][origen.getColumna()];
-	int deltaFila = desti.getFila() - origen.getFila();
-	int deltaCol = desti.getColumna() - origen.getColumna();
-	int dirFila;
-	int dirCol;
 
-	if (deltaFila > 0) {
-		dirFila = 1;
-	}
-	else {
-		dirFila = -1;
-	}
-
-	if (deltaCol > 0) {
-		dirCol = 1;
-	}
-	else {
-		dirCol = -1;
-	}
-
-	if (fitxa.getTipus() == TIPUS_NORMAL) {
-		int filaIntermedia = origen.getFila() + dirFila;
-		int colIntermedia = origen.getColumna() + dirCol;
-
-		if (filaIntermedia >= 0 && filaIntermedia < N_FILES &&
-			colIntermedia >= 0 && colIntermedia < N_COLUMNES &&
-			!m_tauler[filaIntermedia][colIntermedia].esBuida() &&
-			m_tauler[filaIntermedia][colIntermedia].getColor() != fitxa.getColor()) {
-
-			int nuevaFila = origen.getFila() + 2 * dirFila;
-			int nuevaCol = origen.getColumna() + 2 * dirCol;
-
-			if (nuevaFila >= 0 && nuevaFila < N_FILES &&
-				nuevaCol >= 0 && nuevaCol < N_COLUMNES &&
-				m_tauler[nuevaFila][nuevaCol].esBuida()) {
-				desti = Posicio(nuevaFila, nuevaCol);
-				return;
-			}
-		}
-	}
-	else {
-		int f = origen.getFila();
-		int c = origen.getColumna();
-		bool encontradoContrario = false;
-		int filaContrario = -1;
-		int colContrario = -1;
-
-		while (true) {
-			f += dirFila;
-			c += dirCol;
-
-			if (f < 0 || f >= N_FILES || c < 0 || c >= N_COLUMNES) {
-				break;
-			}
-
-			if (!m_tauler[f][c].esBuida()) {
-				if (m_tauler[f][c].getColor() != fitxa.getColor() && !encontradoContrario) {
-					encontradoContrario = true;
-					filaContrario = f;
-					colContrario = c;
-				}
-				else {
-					break;
-				}
-			}
-			else if (encontradoContrario) {
-				desti = Posicio(f, c);
-				return;
-			}
-		}
-	}
-
-	desti = Posicio(origen.getFila() + deltaFila, origen.getColumna() + deltaCol);
-}
-
+// Verifica si un movimiento de una ficha en un tablero de juego es valido. Este metodo toma las coordenadas
+// de la posicion origen y destino, y un parametro de referencia esCaptura que indica si el movimiento
+// implica capturar una ficha contraria
 bool Tauler::esMovimentValid(int filaOrigen, int colOrigen, int filaDesti, int colDesti, bool& esCaptura)
 {
 	esCaptura = false;
-
-	if (filaDesti < 0 || filaDesti >= N_FILES || colDesti < 0 || colDesti >= N_COLUMNES)
-		return false;
+	// Verificamos si la posicion de destino esta dentro de los limites
+	if (filaDesti < 0 || filaDesti >= N_FILES || colDesti < 0 || colDesti >= N_COLUMNES) return false;
 
 	const Fitxa& fitxaOrigen = m_tauler[filaOrigen][colOrigen];
 	const Fitxa& fitxaDesti = m_tauler[filaDesti][colDesti];
 
 	if (fitxaDesti.esBuida()) {
 		if (fitxaOrigen.getTipus() == TIPUS_NORMAL) {
+			// Calculamos la diferencia entre filas y columnas para determinar en que direccion se mueve la ficha
 			int deltaFila = filaDesti - filaOrigen;
 			int deltaCol = colDesti - colOrigen;
 
@@ -141,33 +71,33 @@ bool Tauler::esMovimentValid(int filaOrigen, int colOrigen, int filaDesti, int c
 				direccioCorrecta = (deltaFila > 0);
 			}
 
-			if (abs(deltaFila) == 1 && abs(deltaCol) == 1) {
+			// Se verifica si el movimiento es una simple diagonal de una casilla
+			if (abs(deltaFila) == 1 && abs(deltaCol) == 1) 
 				return direccioCorrecta;
-			}
-
+			
+			// Se verifica si el movimiento es una captura (diagonal de dos o mas casillas) i si hay fichas contrarias
+			// en el camino
 			if (abs(deltaFila) >= 2 && abs(deltaCol) >= 2 &&
 				abs(deltaFila) == abs(deltaCol)) {
 
-				int dirFila;
-				if (deltaFila > 0) dirFila = 1;
-				else dirFila = -1;
+				int dirFila = 1;
+				if (deltaFila < 0) dirFila = -1;
 
-				int dirCol;
-				if (deltaCol > 0) dirCol = 1;
-				else dirCol = -1;
+				int dirCol = 1;
+				if (deltaCol < 0) dirCol = -1;
 
 				int fitxesContraries = 0;
 				int fila = filaOrigen + dirFila;
 				int col = colOrigen + dirCol;
 
 				while (fila != filaDesti && col != colDesti) {
+					// NO ENTENC PERQUE DIU QUE LEYENDO DATOS INVALIDOS
 					if (!m_tauler[fila][col].esBuida()) {
-						if (m_tauler[fila][col].getColor() == fitxaOrigen.getColor()) return false;
-
 						fitxesContraries++;
+						if (m_tauler[fila][col].getColor() == fitxaOrigen.getColor()) return false;
 					}
-					fila += dirFila;
-					col += dirCol;
+					fila += dirFila; 
+					col += dirCol; 
 				}
 
 				if (fitxesContraries == abs(deltaFila) / 2) {
@@ -181,25 +111,11 @@ bool Tauler::esMovimentValid(int filaOrigen, int colOrigen, int filaDesti, int c
 			int deltaFila = filaDesti - filaOrigen;
 			int deltaCol = colDesti - colOrigen;
 
-			if (abs(deltaFila) != abs(deltaCol))
-				return false;
+			int dirFila = 1;
+			if (deltaFila < 0) dirFila = -1;
 
-			int dirFila;
-			int dirCol;
-
-			if (deltaFila > 0) {
-				dirFila = 1;
-			}
-			else {
-				dirFila = -1;
-			}
-
-			if (deltaCol > 0) {
-				dirCol = 1;
-			}
-			else {
-				dirCol = -1;
-			}
+			int dirCol = 1;
+			if (deltaCol < 0) dirCol = -1;
 
 			int f = filaOrigen + dirFila;
 			int c = colOrigen + dirCol;
@@ -350,11 +266,7 @@ void Tauler::obtenirPosicionsPossibles(int fila, int col, Posicio posicions[], i
 						encontradaPiezaContraria = true;
 						filaPiezaContraria = f;
 						colPiezaContraria = c;
-					}
-					else {
-						// Si es una pieza propia o ya encontramos una contraria, paramos
-						break;
-					}
+					}	
 				}
 				// Si encontramos una casilla vacía después de una contraria
 				else if (encontradaPiezaContraria) {
@@ -362,7 +274,6 @@ void Tauler::obtenirPosicionsPossibles(int fila, int col, Posicio posicions[], i
 					posicions[numPosicions++] = Posicio(f, c);
 
 					// No buscamos más en esta dirección
-					break;
 				}
 			}
 		}
@@ -399,7 +310,7 @@ void Tauler::actualitzaMovimentsValids() {
 					}
 					posicionsVisitades[posicioActual.getFila()][posicioActual.getColumna()] = true;
 
-					Posicio posicionsPossibles[4];
+					Posicio posicionsPossibles[100];
 					int numPosicions = 0;
 					obtenirPosicionsPossibles(posicioActual.getFila(), posicioActual.getColumna(), posicionsPossibles, numPosicions);
 
