@@ -118,7 +118,7 @@ void Tauler::canviem(Posicio origen, Posicio& desti) {
 	desti = Posicio(origen.getFila() + deltaFila, origen.getColumna() + deltaCol);
 }
 
-bool Tauler::esMovimentValid(int filaOrigen, int colOrigen, int filaDesti, int colDesti, bool& esCaptura) 
+bool Tauler::esMovimentValid(int filaOrigen, int colOrigen, int filaDesti, int colDesti, bool& esCaptura)
 {
 	esCaptura = false;
 
@@ -620,57 +620,105 @@ string Tauler::toString() const
 	return resultat;
 }
 
-
 void Tauler::getPosicionsPossibles(const Posicio& origen, int& nPosicions, Posicio posicionsPossibles[])
 {
-	bool canvi;
 	nPosicions = 0;
 
 	if (!origen.esValida() || m_tauler[origen.getFila()][origen.getColumna()].esBuida()) {
-		return; // Return early if the position is invalid or empty
+		return;
 	}
 
-	// Comprovar tots els moviments possibles per aquesta fitxa
-	for (int deltaFila = -2; deltaFila <= 2; deltaFila++) {
-		for (int deltaCol = -2; deltaCol <= 2; deltaCol++) {
-			// Només moviments diagonals (mateix valor absolut)
-			if (abs(deltaFila) != abs(deltaCol) || deltaFila == 0)
-				continue;
+	const Fitxa& fitxaOrigen = m_tauler[origen.getFila()][origen.getColumna()];
 
-			int filaDestino = origen.getFila() + deltaFila;
-			int colDestino = origen.getColumna() + deltaCol;
+	const int direcciones[4][2] = { {1,1}, {1,-1}, {-1,1}, {-1,-1} };
 
-			if (filaDestino >= 0 && filaDestino < N_FILES &&
-				colDestino >= 0 && colDestino < N_COLUMNES) {
+	bool hayCaptura = false;
 
-				bool esCaptura = false;
-				if (esMovimentValid(origen.getFila(), origen.getColumna(),
-					filaDestino, colDestino, esCaptura)) {
+	if (fitxaOrigen.getTipus() == TIPUS_NORMAL) {
+		for (int d = 0; d < 4; d++) {
+			int dirFila = direcciones[d][0];
+			int dirCol = direcciones[d][1];
 
-					posicionsPossibles[nPosicions++] = Posicio(filaDestino, colDestino);
+			int nuevaFila = origen.getFila() + 2 * dirFila;
+			int nuevaCol = origen.getColumna() + 2 * dirCol;
+
+			if (nuevaFila >= 0 && nuevaFila < N_FILES && nuevaCol >= 0 && nuevaCol < N_COLUMNES) {
+				int filaIntermedia = origen.getFila() + dirFila;
+				int colIntermedia = origen.getColumna() + dirCol;
+
+				if (!m_tauler[filaIntermedia][colIntermedia].esBuida() &&
+					m_tauler[filaIntermedia][colIntermedia].getColor() != fitxaOrigen.getColor() &&
+					m_tauler[nuevaFila][nuevaCol].esBuida()) {
+
+					posicionsPossibles[nPosicions++] = Posicio(nuevaFila, nuevaCol);
+					hayCaptura = true;
+				}
+			}
+		}
+	}
+	else if (fitxaOrigen.getTipus() == TIPUS_DAMA) {
+		for (int d = 0; d < 4; d++) {
+			int dirFila = direcciones[d][0];
+			int dirCol = direcciones[d][1];
+			int f = origen.getFila();
+			int c = origen.getColumna();
+			bool fichaEncontrada = false;
+
+			while (true) {
+				f += dirFila;
+				c += dirCol;
+
+				if (f < 0 || f >= N_FILES || c < 0 || c >= N_COLUMNES) {
+					break;
+				}
+
+				if (!m_tauler[f][c].esBuida()) {
+					if (fichaEncontrada) {
+						break;
+					}
+
+					if (m_tauler[f][c].getColor() == fitxaOrigen.getColor()) {
+						break;
+					}
+
+					fichaEncontrada = true;
+					continue;
+				}
+
+				if (fichaEncontrada) {
+					posicionsPossibles[nPosicions++] = Posicio(f, c);
+					hayCaptura = true;
+				}
+				else if (!hayCaptura) {
+					posicionsPossibles[nPosicions++] = Posicio(f, c);
 				}
 			}
 		}
 	}
 
-	// Si hi ha captures disponibles, eliminem els moviments simples
-	bool hiHaCaptures = false;
-	for (int i = 0; i < nPosicions; i++) {
-		int deltaFila = posicionsPossibles[i].getFila() - origen.getFila();
-		if (abs(deltaFila) > 1) { // Es una captura
-			hiHaCaptures = true;
-			break;
-		}
-	}
+	if (!hayCaptura) {
+		if (fitxaOrigen.getTipus() == TIPUS_NORMAL) {
+			int direccionFila;
+			if (fitxaOrigen.getColor() == COLOR_BLANC) {
+				direccionFila = -1;
+			}
+			else {
+				direccionFila = 1;
+			}
 
-	if (hiHaCaptures) {
-		int numCaptures = 0;
-		for (int i = 0; i < nPosicions; i++) {
-			int deltaFila = posicionsPossibles[i].getFila() - origen.getFila();
-			if (abs(deltaFila) > 1) { // Solo incluimos capturas
-				posicionsPossibles[numCaptures++] = posicionsPossibles[i];
+			int nuevaFila = origen.getFila() + direccionFila;
+			int nuevaCol = origen.getColumna() - 1;
+
+			if (nuevaFila >= 0 && nuevaFila < N_FILES && nuevaCol >= 0 &&
+				m_tauler[nuevaFila][nuevaCol].esBuida()) {
+				posicionsPossibles[nPosicions++] = Posicio(nuevaFila, nuevaCol);
+			}
+
+			nuevaCol = origen.getColumna() + 1;
+			if (nuevaFila >= 0 && nuevaFila < N_FILES && nuevaCol < N_COLUMNES &&
+				m_tauler[nuevaFila][nuevaCol].esBuida()) {
+				posicionsPossibles[nPosicions++] = Posicio(nuevaFila, nuevaCol);
 			}
 		}
-		nPosicions = numCaptures;
 	}
 }
