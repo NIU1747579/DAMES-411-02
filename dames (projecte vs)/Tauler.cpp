@@ -451,7 +451,6 @@ void Tauler::actualitzaMovimentsValids() {
 	}
 }
 
-
 void escriuTauler(const string& nomFitxer, char tauler[N_FILES][N_COLUMNES])
 {
 	ofstream fitxer(nomFitxer);
@@ -533,41 +532,53 @@ bool Tauler::mouFitxa(const Posicio& origen, const Posicio& desti)
 		m_tauler[desti.getFila()][desti.getColumna()].setTipus(TIPUS_DAMA);
 	}
 
+	// Si no es una captura, verificamos si hay alguna ficha que podría capturar
 	if (!esCaptura) {
 		bool hihaAltresCaptures = false;
+		int filaCapturadora = -1;
+		int colCapturadora = -1;
 
+		// Buscar alguna ficha del mismo color que podría realizar una captura
 		for (int i = 0; i < N_FILES && !hihaAltresCaptures; i++) {
 			for (int j = 0; j < N_COLUMNES && !hihaAltresCaptures; j++) {
 				if (!m_tauler[i][j].esBuida() &&
 					m_tauler[i][j].getColor() == fitxaOrigen.getColor()) {
 
-					for (int k = 0; k < m_tauler[i][j].getNumMoviments(); k++) {
-						if (m_tauler[i][j].getMoviment(k).getNCaptures() > 0) {
-							hihaAltresCaptures = true;
-							break;
+					Posicio pos(i, j);
+					Posicio posicionesPosibles[32];
+					int numPosiciones = 0;
+
+					// Obtener posiciones posibles para esta ficha
+					getPosicionsPossibles(pos, numPosiciones, posicionesPosibles);
+
+					// Verificar si alguna de estas posiciones representa una captura
+					for (int k = 0; k < numPosiciones; k++) {
+						bool esUnaCaptura = false;
+						if (esMovimentValid(i, j, posicionesPosibles[k].getFila(),
+							posicionesPosibles[k].getColumna(), esUnaCaptura)) {
+							if (esUnaCaptura) {
+								hihaAltresCaptures = true;
+								filaCapturadora = i;
+								colCapturadora = j;
+								break;
+							}
 						}
 					}
 				}
 			}
 		}
 
+		// Si hay otra ficha que podría capturar, la eliminamos (bufar)
 		if (hihaAltresCaptures) {
-			for (int x = 0; x < N_FILES; x++) {
-				for (int y = 0; y < N_COLUMNES; y++) {
-					if (!m_tauler[x][y].esBuida() &&
-						m_tauler[x][y].getColor() == fitxaOrigen.getColor()) {
-						m_tauler[x][y].setTipus(TIPUS_EMPTY);
-						x = N_FILES;
-						break;
-					}
-				}
-			}
+			// Eliminar la ficha que podría haber realizado una captura
+			m_tauler[filaCapturadora][colCapturadora].setTipus(TIPUS_EMPTY);
 		}
 	}
 
 	actualitzaMovimentsValids();
 	return true;
 }
+
 void Tauler::bufarFitxa(int fila, int columna) //elimina fitxa del jugador
 {
 	//fem una comprovacio per asegurarnos que no surt dels limitis
