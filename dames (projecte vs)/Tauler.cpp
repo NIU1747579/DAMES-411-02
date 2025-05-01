@@ -118,7 +118,8 @@ void Tauler::canviem(Posicio origen, Posicio& desti) {
 	desti = Posicio(origen.getFila() + deltaFila, origen.getColumna() + deltaCol);
 }
 
-bool Tauler::esMovimentValid(int filaOrigen, int colOrigen, int filaDesti, int colDesti, bool& esCaptura) {
+bool Tauler::esMovimentValid(int filaOrigen, int colOrigen, int filaDesti, int colDesti, bool& esCaptura) 
+{
 	esCaptura = false;
 
 	if (filaDesti < 0 || filaDesti >= N_FILES || colDesti < 0 || colDesti >= N_COLUMNES)
@@ -132,23 +133,49 @@ bool Tauler::esMovimentValid(int filaOrigen, int colOrigen, int filaDesti, int c
 			int deltaFila = filaDesti - filaOrigen;
 			int deltaCol = colDesti - colOrigen;
 
-			if ((fitxaOrigen.getColor() == COLOR_BLANC && deltaFila > 0) ||
-				(fitxaOrigen.getColor() == COLOR_NEGRE && deltaFila < 0))
-				return false;
+			bool direccioCorrecta;
+			if (fitxaOrigen.getColor() == COLOR_BLANC) {
+				direccioCorrecta = (deltaFila < 0);
+			}
+			else {
+				direccioCorrecta = (deltaFila > 0);
+			}
 
-			if (abs(deltaFila) == 2 && abs(deltaCol) == 2) {
-				int filaCaptura = filaOrigen + (deltaFila / 2);
-				int colCaptura = colOrigen + (deltaCol / 2);
+			if (abs(deltaFila) == 1 && abs(deltaCol) == 1) {
+				return direccioCorrecta;
+			}
 
-				if (!m_tauler[filaCaptura][colCaptura].esBuida() &&
-					m_tauler[filaCaptura][colCaptura].getColor() != fitxaOrigen.getColor()) {
+			if (abs(deltaFila) >= 2 && abs(deltaCol) >= 2 &&
+				abs(deltaFila) == abs(deltaCol)) {
+
+				int dirFila;
+				if (deltaFila > 0) dirFila = 1;
+				else dirFila = -1;
+
+				int dirCol;
+				if (deltaCol > 0) dirCol = 1;
+				else dirCol = -1;
+
+				int fitxesContraries = 0;
+				int fila = filaOrigen + dirFila;
+				int col = colOrigen + dirCol;
+
+				while (fila != filaDesti && col != colDesti) {
+					if (!m_tauler[fila][col].esBuida()) {
+						if (m_tauler[fila][col].getColor() == fitxaOrigen.getColor()) return false;
+
+						fitxesContraries++;
+					}
+					fila += dirFila;
+					col += dirCol;
+				}
+
+				if (fitxesContraries == abs(deltaFila) / 2) {
 					esCaptura = true;
 					return true;
 				}
-				return false;
 			}
-
-			return (abs(deltaFila) == 1 && abs(deltaCol) == 1);
+			return false;
 		}
 		else if (fitxaOrigen.getTipus() == TIPUS_DAMA) {
 			int deltaFila = filaDesti - filaOrigen;
@@ -195,11 +222,9 @@ bool Tauler::esMovimentValid(int filaOrigen, int colOrigen, int filaDesti, int c
 
 			return true;
 		}
-
-		return true;
 	}
-
 	return false;
+
 }
 
 void Tauler::obtenirPosicionsPossibles(int fila, int col, Posicio posicions[], int& numPosicions) {
