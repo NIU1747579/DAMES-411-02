@@ -30,10 +30,10 @@ public:
 	bool movimentDamaValid(int filaOrigen, int colOrigen, int filaDesti, int colDesti, const Fitxa& fitxaOrigen, bool& esCaptura);
 	int calculaDireccio(int diferencia) const;
 
-
-
+	
 private:
 	Fitxa m_tauler[N_FILES][N_COLUMNES];
+
 };
 
 #endif
