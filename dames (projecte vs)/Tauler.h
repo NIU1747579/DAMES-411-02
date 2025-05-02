@@ -21,9 +21,18 @@ public:
 	bool esMovimentValid(int filaOrigen, int colOrigen, int filaDesti, int colDesti, bool& canvi);
 	string toString() const; //mostrar en pantalla lestat actual del tauler
 
+	bool buscarCapturesRecursivas(const Posicio& origen, int& nPosicions, Posicio posicionsPossibles[]);
+	void buscarCapturesAux(const Posicio& pos, bool posicionesProcesadas[N_FILES][N_COLUMNES], int& nPosicions, Posicio posicionsPossibles[], bool& hiHaCaptures);
+	void assignaFitxa(char tipusFitxa, const Posicio& posicio);
+	bool esDestiDinsLimits(int fila, int col);
+	bool movimentFitxaNormalValid(int filaOrigen, int colOrigen, int filaDesti, int colDesti, const Fitxa& fitxaOrigen, bool& esCaptura);
+	bool movimentDamaValid(int filaOrigen, int colOrigen, int filaDesti, int colDesti, const Fitxa& fitxaOrigen, bool& esCaptura);
+
+
+
 private:
 	Fitxa m_tauler[N_FILES][N_COLUMNES];
-	
+
 };
 
 #endif
