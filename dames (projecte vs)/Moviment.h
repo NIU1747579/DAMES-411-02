@@ -11,11 +11,6 @@ class Moviment
 public:
 	Moviment() : m_numCaptures(0), m_numPosicions(0) {}
 
-	void setOrigen(const Posicio& o) { m_origen = o; }
-	void setDesti(const Posicio& d) { m_desti = d; }
-
-	Posicio getOrigen() const { return m_origen; }
-	Posicio getDesti() const { return m_desti; }
 	int getNCaptures() const { return m_numCaptures; }
 	Posicio getCaptures(int i) { return m_captures[i]; }
 
@@ -26,10 +21,6 @@ public:
 	int getNumPosicions() const { return m_numPosicions; };
 
 private:
-	//nose si cal
-	Posicio m_origen; //nomes volem guardar una captura per moviment
-	Posicio m_desti;
-
 	Posicio m_captures[12]; //max de captures en un moviment
 	int m_numCaptures;
 
