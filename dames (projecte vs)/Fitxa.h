@@ -19,21 +19,14 @@ typedef enum
 class Fitxa
 {
 public:
-	Fitxa() : tipus_Fitxa(TIPUS_EMPTY), color_Fitxa(COLOR_BLANC), m_numMoviments(0) {}
+	Fitxa() : m_numMoviments(0), tipus_Fitxa(TIPUS_EMPTY){}
 
 	void setTipus(const TipusFitxa& tipus) { tipus_Fitxa = tipus; }
 	void setColor(const ColorFitxa& color) { color_Fitxa = color; }
-
-	void convertirADama();
-	bool esBuida() const { return (tipus_Fitxa == TIPUS_EMPTY); } //per comprovar si la casella esta buida - Per el metode movimentValid
-	bool esContraria(const Fitxa& contrari) const;
-
 	TipusFitxa getTipus() const { return tipus_Fitxa; }
 	ColorFitxa getColor()const { return color_Fitxa; }
 
-	int getNumMoviments() const { return m_numMoviments; };
-	Moviment getMoviment(int index) const { return m_movimentsValids[index]; };
-
+	bool esBuida() const { return (tipus_Fitxa == TIPUS_EMPTY); } // Per comprovar si la casella esta buida
 	void netejaMovimentsValids();
 	void afegeixMovimentValid(const Moviment& moviment);
 
