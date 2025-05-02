@@ -34,7 +34,6 @@ public:
 
 private:
 	Fitxa m_tauler[N_FILES][N_COLUMNES];
-
 };
 
 #endif
