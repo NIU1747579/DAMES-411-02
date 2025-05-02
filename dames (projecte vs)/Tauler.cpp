@@ -286,8 +286,27 @@ bool Tauler::mouFitxa(const Posicio& origen, const Posicio& desti) {
         m_tauler[desti.getFila()][desti.getColumna()].setTipus(TIPUS_DAMA);
     }
 
+    // Verificar si desde la nueva posicion se pueden capturar fichas contrarias
+    bool potCapturarDesdeNovaPosicio = false;
+    Posicio novaPosicio = desti;
+    Posicio posicionsPossibles[32];
+    int numPosicions = 0;
+
+    getPosicionsPossibles(novaPosicio, numPosicions, posicionsPossibles);
+
+    for (int i = 0; i < numPosicions; i++) {
+        bool esCapturaPossible = false;
+        if (esMovimentValid(novaPosicio.getFila(), novaPosicio.getColumna(),
+            posicionsPossibles[i].getFila(), posicionsPossibles[i].getColumna(), esCapturaPossible)) {
+            if (esCapturaPossible) {
+                potCapturarDesdeNovaPosicio = true;
+                break;
+            }
+        }
+    }
+
     // Regla de "bufar" (eliminar ficha si no se capturo pudiendo hacerlo)
-    if (!esCaptura) {
+    if (!esCaptura || (esCaptura && potCapturarDesdeNovaPosicio)) {
         bool hihaAltresCaptures = false;
 
         // Buscar en todo el tablero
@@ -322,7 +341,6 @@ bool Tauler::mouFitxa(const Posicio& origen, const Posicio& desti) {
     actualitzaMovimentsValids();
     return true;
 }
-
 string Tauler::toString() const
 {
     string resultat;
@@ -401,7 +419,7 @@ void Tauler::getPosicionsPossibles(const Posicio& origen, int& nPosicions, Posic
                 }
             }
         }
-        else {
+        else if (fitxaOrigen.getTipus() == TIPUS_DAMA) {
             // Para damas
             int f = origen.getFila() + dirFila;
             int c = origen.getColumna() + dirCol;
@@ -416,7 +434,7 @@ void Tauler::getPosicionsPossibles(const Posicio& origen, int& nPosicions, Posic
                         fichaContrariaEncontrada = true;
                     }
                     else {
-                        break; // Mas de una ficha contraria
+                        break; // Más de una ficha contraria
                     }
                 }
                 else {
@@ -451,7 +469,7 @@ void Tauler::getPosicionsPossibles(const Posicio& origen, int& nPosicions, Posic
                 posicionsPossibles[nPosicions++] = Posicio(novaFila, novaCol);
             }
         }
-        else {
+        else if (fitxaOrigen.getTipus() == TIPUS_DAMA) {
             // Para damas, movimientos simples en todas las direcciones
             for (int d = 0; d < 4; d++) {
                 int dirFila = direcciones[d][0];
