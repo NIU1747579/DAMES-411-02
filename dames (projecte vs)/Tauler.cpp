@@ -20,7 +20,7 @@ void Tauler::inicialitza(const string& nomFitxer)
         Posicio posicio;
         posicio.fromString(pos);
         assignaFitxa(tipusFitxa, posicio);
-        
+
     }
     fitxer.close();
 }
@@ -117,7 +117,7 @@ bool Tauler::movimentFitxaNormalValid(int filaOrigen, int colOrigen, int filaDes
 
     // Determina la direccio valida segons el color
     if (fitxaOrigen.getColor() == COLOR_BLANC) direccioCorrecta = (deltaFila < 0);
-     else direccioCorrecta = (deltaFila > 0);
+    else direccioCorrecta = (deltaFila > 0);
     // Moviment simple
     if (abs(deltaFila) == 1 && abs(deltaCol) == 1) return direccioCorrecta;
     // Moviment de captura de mes de dos caselles
@@ -549,7 +549,7 @@ void Tauler::buscarCapturesAux(const Posicio& pos, bool posicionesProcesadas[N_F
             bool fichaContrariaEncontrada = false;
             int filaCaptura = -1, colCaptura = -1;
 
-            while (esDestiDinsLimits(f,c)) {
+            while (esDestiDinsLimits(f, c)) {
                 if (!m_tauler[f][c].esBuida()) {
                     if (m_tauler[f][c].getColor() == fitxaOrigen.getColor()) {
                         break; // Ficha del mismo color
