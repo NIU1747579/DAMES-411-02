@@ -1,6 +1,6 @@
 #include "tauler.hpp"
 
-// Inicializa el tablero del juego a partir de un fichero
+// Inicialitza el tauler de joc a partir dun fitxer
 void Tauler::inicialitza(const string& nomFitxer)
 {
     ifstream fitxer(nomFitxer);
@@ -70,9 +70,23 @@ void escriuTauler(const string& nomFitxer, char tauler[N_FILES][N_COLUMNES])
     fitxer.close();
 }
 
-// Verifica si un movimiento de una ficha en un tablero de juego es valido. Este metodo toma las coordenadas
-// de la posicion origen y destino, y un parametro de referencia esCaptura que indica si el movimiento
-// implica capturar una ficha contraria
+// Determina en quina direccio es mouen les fitxes
+int Tauler::calculaDireccio(int diferencia) const {
+    int direc = 1; // X defecte
+    if (diferencia > 0) direc = 1;
+    if (diferencia < 0) direc = -1;
+    return direc;
+}
+
+// Comprova que el desti estigui dintre del tauler
+bool Tauler::esDestiDinsLimits(int fila, int col)
+{
+    return fila >= 0 && fila < N_FILES && col >= 0 && col < N_COLUMNES;
+}
+
+// Verifica si un moviment duna fitxa en un tauler de joc es valid. Aquest metode rep les coordenades
+// de la posicio origen i desti, i un parametre de referencia esCaptura que indica si el moviment implica
+// capturar una fitxa contraria
 bool Tauler::esMovimentValid(int filaOrigen, int colOrigen, int filaDesti, int colDesti, bool& esCaptura)
 {
     esCaptura = false;
@@ -92,23 +106,24 @@ bool Tauler::esMovimentValid(int filaOrigen, int colOrigen, int filaDesti, int c
     return false;
 }
 
-bool Tauler::esDestiDinsLimits(int fila, int col)
-{
-    return fila >= 0 && fila < N_FILES && col >= 0 && col < N_COLUMNES;
-}
-
+// Funcio per validar el moviment duna fitxa normal
 bool Tauler::movimentFitxaNormalValid(int filaOrigen, int colOrigen, int filaDesti, int colDesti, const Fitxa& fitxaOrigen, bool& esCaptura)
 {
+    // Calcula la diferencia de posicions entre desti i origen
     int deltaFila = filaDesti - filaOrigen;
     int deltaCol = colDesti - colOrigen;
-    bool direccioCorrecta = (fitxaOrigen.getColor() == COLOR_BLANC) ? (deltaFila < 0) : (deltaFila > 0);
 
-    if (abs(deltaFila) == 1 && abs(deltaCol) == 1)
-        return direccioCorrecta;
+    bool direccioCorrecta;
 
+    // Determina la direccio valida segons el color
+    if (fitxaOrigen.getColor() == COLOR_BLANC) direccioCorrecta = (deltaFila < 0);
+     else direccioCorrecta = (deltaFila > 0);
+    // Moviment simple
+    if (abs(deltaFila) == 1 && abs(deltaCol) == 1) return direccioCorrecta;
+    // Moviment de captura de mes de dos caselles
     if (abs(deltaFila) >= 2 && abs(deltaCol) >= 2 && abs(deltaFila) == abs(deltaCol)) {
-        int dirFila = (deltaFila < 0) ? -1 : 1;
-        int dirCol = (deltaCol < 0) ? -1 : 1;
+        int dirFila = calculaDireccio(deltaFila);
+        int dirCol = calculaDireccio(deltaCol);
 
         int fitxesContraries = 0;
         int fila = filaOrigen + dirFila;
@@ -133,10 +148,11 @@ bool Tauler::movimentFitxaNormalValid(int filaOrigen, int colOrigen, int filaDes
 
 bool Tauler::movimentDamaValid(int filaOrigen, int colOrigen, int filaDesti, int colDesti, const Fitxa& fitxaOrigen, bool& esCaptura)
 {
+
     int deltaFila = filaDesti - filaOrigen;
     int deltaCol = colDesti - colOrigen;
-    int dirFila = (deltaFila < 0) ? -1 : 1;
-    int dirCol = (deltaCol < 0) ? -1 : 1;
+    int dirFila = calculaDireccio(deltaFila);
+    int dirCol = calculaDireccio(deltaCol);
 
     int f = filaOrigen + dirFila;
     int c = colOrigen + dirCol;
@@ -258,8 +274,8 @@ bool Tauler::mouFitxa(const Posicio& origen, const Posicio& desti) {
         int deltaFila = desti.getFila() - origen.getFila();
         int deltaCol = desti.getColumna() - origen.getColumna();
 
-        int dirFila = (deltaFila > 0) ? 1 : -1;
-        int dirCol = (deltaCol > 0) ? 1 : -1;
+        int dirFila = calculaDireccio(deltaFila);
+        int dirCol = calculaDireccio(deltaCol);
 
         int fila = origen.getFila() + dirFila;
         int col = origen.getColumna() + dirCol;
@@ -390,15 +406,15 @@ void Tauler::getPosicionsPossibles(const Posicio& origen, int& nPosicions, Posic
     const Fitxa& fitxaOrigen = m_tauler[origen.getFila()][origen.getColumna()];
     const int direcciones[4][2] = { {1,1}, {1,-1}, {-1,1}, {-1,-1} };
 
-    // Primero intentamos buscar capturas
+    // Busquem primer totes les captures possibles
     bool hiHaCaptures = buscarCapturesRecursivas(origen, nPosicions, posicionsPossibles);
 
-    // Si no hay capturas, verificar movimientos simples
-    if (!hiHaCaptures) {
+    // Si no hi ha captures, afegim moviments simples
+    if (!hiHaCaptures || fitxaOrigen.getTipus() == TIPUS_DAMA) {
         if (fitxaOrigen.getTipus() == TIPUS_NORMAL) {
             int direccionFila = (fitxaOrigen.getColor() == COLOR_BLANC) ? -1 : 1;
 
-            // Diagonal izquierda
+            // Diagonal esquerra
             int novaFila = origen.getFila() + direccionFila;
             int novaCol = origen.getColumna() - 1;
             if (novaFila >= 0 && novaFila < N_FILES && novaCol >= 0 && novaCol < N_COLUMNES &&
@@ -406,7 +422,7 @@ void Tauler::getPosicionsPossibles(const Posicio& origen, int& nPosicions, Posic
                 posicionsPossibles[nPosicions++] = Posicio(novaFila, novaCol);
             }
 
-            // Diagonal derecha
+            // Diagonal dreta
             novaCol = origen.getColumna() + 1;
             if (novaFila >= 0 && novaFila < N_FILES && novaCol >= 0 && novaCol < N_COLUMNES &&
                 m_tauler[novaFila][novaCol].esBuida()) {
@@ -414,7 +430,7 @@ void Tauler::getPosicionsPossibles(const Posicio& origen, int& nPosicions, Posic
             }
         }
         else if (fitxaOrigen.getTipus() == TIPUS_DAMA) {
-            // Para damas, movimientos simples en todas las direcciones
+            // Per dames, moviments simples en totes direccions
             for (int d = 0; d < 4; d++) {
                 int dirFila = direcciones[d][0];
                 int dirCol = direcciones[d][1];
@@ -422,7 +438,16 @@ void Tauler::getPosicionsPossibles(const Posicio& origen, int& nPosicions, Posic
                 int c = origen.getColumna() + dirCol;
 
                 while (f >= 0 && f < N_FILES && c >= 0 && c < N_COLUMNES && m_tauler[f][c].esBuida()) {
-                    posicionsPossibles[nPosicions++] = Posicio(f, c);
+                    // Verifiquem que no sigui una posicio ja afegida
+                    bool duplicada = false;
+                    for (int i = 0; i < nPosicions && !duplicada; i++) {
+                        if (posicionsPossibles[i].getFila() == f && posicionsPossibles[i].getColumna() == c) {
+                            duplicada = true;
+                        }
+                    }
+                    if (!duplicada) {
+                        posicionsPossibles[nPosicions++] = Posicio(f, c);
+                    }
                     f += dirFila;
                     c += dirCol;
                 }
@@ -430,6 +455,7 @@ void Tauler::getPosicionsPossibles(const Posicio& origen, int& nPosicions, Posic
         }
     }
 }
+
 
 
 
@@ -523,7 +549,7 @@ void Tauler::buscarCapturesAux(const Posicio& pos, bool posicionesProcesadas[N_F
             bool fichaContrariaEncontrada = false;
             int filaCaptura = -1, colCaptura = -1;
 
-            while (f >= 0 && f < N_FILES && c >= 0 && c < N_COLUMNES) {
+            while (esDestiDinsLimits(f,c)) {
                 if (!m_tauler[f][c].esBuida()) {
                     if (m_tauler[f][c].getColor() == fitxaOrigen.getColor()) {
                         break; // Ficha del mismo color
