@@ -1,0 +1,46 @@
+
+#include "posicio.hpp"
+
+string Posicio::toString() const
+{
+	string posicio = "a1";
+	posicio[0] = 'a' + m_columna;
+	posicio[1] = '1' + (N_FILES - 1) - m_fila;
+	return posicio;
+}
+void Posicio::fromString(const string& pos)
+{
+	m_fila = (N_FILES - 1) - (pos[1] - '1');
+	m_columna = pos[0] - 'a';
+}
+
+ifstream& operator>>(ifstream& fitxer, Posicio& posicio)
+{
+	string x;
+	fitxer >> x;
+	posicio.fromString(x);
+	return fitxer;
+}
+
+bool Posicio::operator==(const Posicio& posicio) const
+{
+	return ((m_fila == posicio.m_fila) &&
+		(m_columna == posicio.m_columna));
+}
+
+bool Posicio::esValida() const
+{
+	//verificar que les posicions estan dintre del tauler
+	return ((m_fila >= 0) && (m_fila < N_FILES)
+		&& (m_columna >= 0) && (m_columna < N_COLUMNES));
+}
+
+Posicio::Posicio(const string& posicioString)
+{
+	fromString(posicioString);
+}
+ostream& operator<<(ostream& out, const Posicio& pos)
+{
+	out << pos.toString();
+	return out;
+}

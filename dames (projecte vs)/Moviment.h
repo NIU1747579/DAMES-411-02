@@ -2,30 +2,24 @@
 #define MOVIMENT_H
 
 #include <iostream>
-using namespace std;
-
 #include "posicio.hpp"
+#include <vector>
+using namespace std;
 
 class Moviment
 {
 public:
-	Moviment() : m_numCaptures(0), m_numPosicions(0) {}
-
-	int getNCaptures() const { return m_numCaptures; }
-	Posicio getCaptures(int i) { return m_captures[i]; }
+	Moviment(){}
 
 	Posicio getUltimaPosicio() const;
-	void afegirCaptura(const Posicio& captura);
-	void afegirPosicio(const Posicio& pos);
-	Posicio getPosicio(int index) const { return m_posicions[index]; };
-	int getNumPosicions() const { return m_numPosicions; };
+	void afegirCaptura(const Posicio& captura) { m_captures.push_back(captura); }
+	void afegirPosicio(const Posicio& pos) { m_posicions.push_back(pos); }
+	Posicio getPosicio(int index) const { return m_posicions[index]; }
+	int getNumPosicions() const;
 
 private:
-	Posicio m_captures[12]; //max de captures en un moviment
-	int m_numCaptures;
-
-	Posicio m_posicions[20];
-	int m_numPosicions;
-};
+	vector<Posicio> m_posicions; 
+	vector<Posicio> m_captures;
+}; 
 
 #endif
