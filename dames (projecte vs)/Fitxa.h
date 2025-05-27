@@ -1,7 +1,10 @@
 #include <iostream>
-using namespace std;
+# include <vector>
 
 #include "Moviment.h"
+#include "GraphicManager.h"
+
+using namespace std;
 
 typedef enum
 {
@@ -19,8 +22,8 @@ typedef enum
 class Fitxa
 {
 public:
-	Fitxa() : m_numMoviments(0), tipus_Fitxa(TIPUS_EMPTY){}
-
+	Fitxa() : tipus_Fitxa(TIPUS_EMPTY), color_Fitxa(COLOR_BLANC){}
+	Fitxa(const TipusFitxa& tipus, const ColorFitxa& color) { tipus_Fitxa = tipus, color_Fitxa = color; }
 	void setTipus(const TipusFitxa& tipus) { tipus_Fitxa = tipus; }
 	void setColor(const ColorFitxa& color) { color_Fitxa = color; }
 	TipusFitxa getTipus() const { return tipus_Fitxa; }
@@ -29,10 +32,12 @@ public:
 	bool esBuida() const { return (tipus_Fitxa == TIPUS_EMPTY); } // Per comprovar si la casella esta buida
 	void netejaMovimentsValids();
 	void afegeixMovimentValid(const Moviment& moviment);
+	const vector<Moviment>& getMovimentValid(const Moviment& moviment){ 
+		m_movimentsValids.push_back(moviment); }
+	void visualitzaFitxa(float x, float y) const;
 
 private:
 	TipusFitxa tipus_Fitxa;
 	ColorFitxa color_Fitxa;
-	Moviment m_movimentsValids[20];
-	int m_numMoviments;
+	std::vector<Moviment> m_movimentsValids;
 };
