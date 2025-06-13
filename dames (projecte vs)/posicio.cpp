@@ -13,7 +13,11 @@ void Posicio::fromString(const string& pos)
 	m_fila = (N_FILES - 1) - (pos[1] - '1');
 	m_columna = pos[0] - 'a';
 }
-
+bool Posicio::operator==(const Posicio& posicio) const
+{
+	return ((m_fila == posicio.m_fila) &&
+		(m_columna == posicio.m_columna));
+}
 ifstream& operator>>(ifstream& fitxer, Posicio& posicio)
 {
 	string x;
@@ -21,20 +25,12 @@ ifstream& operator>>(ifstream& fitxer, Posicio& posicio)
 	posicio.fromString(x);
 	return fitxer;
 }
-
-bool Posicio::operator==(const Posicio& posicio) const
-{
-	return ((m_fila == posicio.m_fila) &&
-		(m_columna == posicio.m_columna));
-}
-
 bool Posicio::esValida() const
 {
 	//verificar que les posicions estan dintre del tauler
 	return ((m_fila >= 0) && (m_fila < N_FILES)
 		&& (m_columna >= 0) && (m_columna < N_COLUMNES));
 }
-
 Posicio::Posicio(const string& posicioString)
 {
 	fromString(posicioString);
