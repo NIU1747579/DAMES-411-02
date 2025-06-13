@@ -21,19 +21,23 @@ public:
 
 	void inicialitza(const string& nomFitxer);
 	void actualitzaMovimentsValids();
-	bool mouFitxa(const Posicio& origen, const Posicio& desti);
+	bool mouFitxa(const Posicio& origen, const Posicio& desti, bool& esCaptura);
 	string toString() const; //mostrar en pantalla lestat actual del tauler
 
 	void getPosicionsPossibles(const Posicio& origen, vector<Posicio>& posicionsPossibles);
 	bool esMovimentValid(int filaOrigen, int colOrigen, int filaDesti, int colDesti, bool& canvi);
+	void bufar(ColorFitxa colorJugador); 
+
 
 	bool comprovarFiPartida(ColorFitxa& guanyador) const;
 
 	void visualitzaTauler(const Posicio& fitxaSeleccionada, const vector<Posicio>& movimentsValids);
 	void visualitzaMovimentsValids(const vector<Posicio>& posicions) const;
 
-	// No se si estaria correcte pero
 	Fitxa* getFitxa(int fila, int col) const;
+
+private:
+	Fitxa* m_tauler[N_FILES][N_COLUMNES];
 
 	bool buscarCapturesRecursivas(const Posicio& origen, vector<Posicio>& posicionsPossibles);
 	void buscarCapturesAux(const Posicio& pos, bool posicionesProcesadas[N_FILES][N_COLUMNES],
@@ -44,9 +48,8 @@ public:
 	bool movimentDamaValid(int filaOrigen, int colOrigen, int filaDesti, int colDesti, const Fitxa& fitxaOrigen, bool& esCaptura);
 	int calculaDireccio(int diferencia) const;
 
+	void eliminaFitxa(const Posicio& pos);
 
-private:
-	Fitxa* m_tauler[N_FILES][N_COLUMNES];
 };
 
 #endif
