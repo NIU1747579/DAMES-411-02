@@ -11,12 +11,12 @@
 
 using namespace std;
 
-class Joc 
+class Joc
 {
 
 public:
-    Joc() : m_finalPartida(false), m_mode(MODE_JOC_NONE), m_jugadorActual(COLOR_BLANC), m_guanyador(COLOR_BLANC){};
-    
+    Joc() : m_mode(MODE_JOC_NONE), m_jugadorActual(COLOR_BLANC), m_guanyador(COLOR_BLANC) {};
+
     bool actualitza(int mousePosX, int mousePosY, bool mouseStatus);
     void inicialitza(ModeJoc mode, const string& nomFitxerTauler, const string& nomFitxerMoviments);
     void finalitza();
@@ -25,17 +25,25 @@ public:
     bool actualitzaModeReplay(int mousePosX, int mousePosY, bool mouseStatus);
     void dibuixaInformacioJoc();
 
-    
 private:
-    Tauler m_tauler; // Tauler de joc
+    Tauler m_tauler;
     CuaMoviments m_cua; // Cua de moviments realitzats
-    ModeJoc m_mode; // Mode de joc actual
-    bool m_finalPartida; // Indica si la partida ha acabat
-    ColorFitxa m_guanyador; // Guanyador de la partida
-    ColorFitxa m_jugadorActual; // Jugador amb el torn
+    ModeJoc m_mode;
+    ColorFitxa m_guanyador;
+    ColorFitxa m_jugadorActual; // Jugador amb el torn 
+    Posicio m_ultimaPosicioDesti; 
+
+    bool m_finalPartida;
+    bool m_ultimMovimentEsCaptura;
+    bool m_esperantPrimerClic = false;
+
+    string m_nomFitxerMoviments;
 
     Posicio m_fitxaSeleccionada; // Posicio de la peca seleccionada
     std::vector<Posicio>m_movimentsValids; // Llista de moviments valids
+
+    vector<Posicio> m_fitxesAmbCapturesInicials; // Para registrar fichas con capturas al inicio del turno
+    vector<Posicio> m_fitxesQueHanCapturat;
 
     void canviarTorn();
 };
