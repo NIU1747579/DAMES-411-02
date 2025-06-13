@@ -29,40 +29,125 @@
 #include "./joc.hpp"
 #include "./info_joc.hpp"
 
+ModeJoc seleccionarModeJoc(Screen& pantalla, bool& salirDelPrograma) {
+    ModeJoc modeSeleccionat = MODE_JOC_NORMAL; // Valor por defecto
+    bool seleccionat = false;
+
+    // No molt clar les mides
+    const int ampladaClic = 300;
+    const int altoBoton = 60;
+    const int posXBoton = (TAMANY_PANTALLA_X - ampladaClic) / 2; // Centrat horit
+    const int posYTitulo = 150;
+    const int posYBotonNormal = 300;
+    const int posYBotonReplay = 400;
+    const int textOffsetY = (altoBoton / 2) - 15;
+
+    while (!seleccionat && !salirDelPrograma) {
+        pantalla.processEvents();
+
+        // Surt del programa si es precioma ESC
+        if (Keyboard_GetKeyTrg(KEYBOARD_ESCAPE)) {
+            salirDelPrograma = true;
+            break;
+        }
+
+        GraphicManager::getInstance()->drawSprite(GRAFIC_FONS, 0, 0);
+        string titol = "SELECCIONA MODE DE JOC";
+        GraphicManager::getInstance()->drawFont( FONT_WHITE_30,(TAMANY_PANTALLA_X / 2) - 150, posYTitulo, 1.0, titol);
+
+        // Obtenim l'estat del ratoli
+        int mouseX = Mouse_getX();
+        int mouseY = Mouse_getY();
+        bool mouseClick = Mouse_getBtnLeft();
+
+        // Per detectar el ratoli a sobre del boto (NORMAL)
+        bool mouseSobreNormal = (mouseX >= posXBoton && mouseX <= posXBoton + ampladaClic &&
+            mouseY >= posYBotonNormal && mouseY <= posYBotonNormal + altoBoton);
+
+        if (mouseSobreNormal) {
+            GraphicManager::getInstance()->drawFont(FONT_GREEN_30, posXBoton + ampladaClic / 2 - 70,
+                posYBotonNormal + textOffsetY, 1.0, "MODO NORMAL");
+        }
+        else {
+            GraphicManager::getInstance()->drawFont(FONT_WHITE_30, posXBoton + ampladaClic / 2 - 70,
+                posYBotonNormal + textOffsetY, 1.0, "MODO NORMAL");
+        }
+
+        // Per detectar el ratoli a sobre del boto (REPLAY)
+        bool mouseSobreReplay = (mouseX >= posXBoton && mouseX <= posXBoton + ampladaClic &&
+            mouseY >= posYBotonReplay && mouseY <= posYBotonReplay + altoBoton);
+
+        if (mouseSobreReplay) {
+            GraphicManager::getInstance()->drawFont(FONT_GREEN_30, posXBoton + ampladaClic / 2 - 70,
+                posYBotonReplay + textOffsetY, 1.0, "MODO REPLAY");
+        }
+        else {
+            GraphicManager::getInstance()->drawFont(FONT_WHITE_30, posXBoton + ampladaClic / 2 - 70,
+                posYBotonReplay + textOffsetY, 1.0, "MODO REPLAY");
+        }
+
+        if (mouseClick) {
+            if (mouseSobreNormal) {
+                modeSeleccionat = MODE_JOC_NORMAL;
+                seleccionat = true;
+            }
+            else if (mouseSobreReplay) {
+                modeSeleccionat = MODE_JOC_REPLAY;
+                seleccionat = true;
+            }
+        }
+
+        pantalla.update();
+    }
+
+    return modeSeleccionat;
+}
 
 int main(int argc, const char* argv[])
 {
-    //Instruccions necesaries per poder incloure la llibreria i que trobi el main
     SDL_SetMainReady();
     SDL_Init(SDL_INIT_VIDEO);
 
-    //Inicialitza un objecte de la classe Screen que s'utilitza per gestionar la finestra grafica
     Screen pantalla(TAMANY_PANTALLA_X, TAMANY_PANTALLA_Y);
-    //Mostrem la finestra grafica
     pantalla.show();
 
-    Joc joc;
-    
-    joc.inicialitza(MODE_JOC_NORMAL, "data/Games/tauler_inicial.txt", "data/Games/moviments.txt");
+    bool salirDelPrograma = false;
 
-    do
+    while (!salirDelPrograma)
     {
-        // Captura tots els events de ratolí i teclat de l'ultim cicle
-        pantalla.processEvents();
+        // Mostrar menú de selección de modo
+        ModeJoc mode = seleccionarModeJoc(pantalla, salirDelPrograma);
 
-        bool mouseStatus = Mouse_getBtnLeft();
-        int mousePosX = Mouse_getX();
-        int mousePosY = Mouse_getY();
-        bool final = joc.actualitza(mousePosX, mousePosY, mouseStatus);
+        // Si salirDelPrograma es true, terminar el programa
+        if (salirDelPrograma) {
+            break;
+        }
 
-        // Actualitza la pantalla
-        pantalla.update();
+        // Inicializar el juego con el modo seleccionado
+        Joc joc;
+        joc.inicialitza(mode, "data/Games/tauler_inicial.txt", "data/Games/moviments.txt");
 
-    } while (!Keyboard_GetKeyTrg(KEYBOARD_ESCAPE));
-    // Sortim del bucle si pressionem ESC
+        bool volverAlMenu = false;
+        do
+        {
+            pantalla.processEvents();
+            bool mouseStatus = Mouse_getBtnLeft();
+            int mousePosX = Mouse_getX();
+            int mousePosY = Mouse_getY();
+            bool final = joc.actualitza(mousePosX, mousePosY, mouseStatus);
 
-    //Instruccio necesaria per alliberar els recursos de la llibreria 
+            // Verificar si se presionó ESCAPE durante el juego
+            if (Keyboard_GetKeyTrg(KEYBOARD_ESCAPE))
+            {
+                volverAlMenu = true;
+            }
+
+            pantalla.update();
+        } while (!volverAlMenu && !Keyboard_GetKeyTrg(KEYBOARD_ESCAPE));
+
+        joc.finalitza();
+    }
+
     SDL_Quit();
     return 0;
 }
-
