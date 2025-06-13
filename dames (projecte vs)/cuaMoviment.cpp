@@ -1,30 +1,46 @@
 #include "cuaMoviment.h"
 
-void CuaMoviments::neteja() 
-{
-	while (!esBuida()) treuMoviment();  
+void CuaMoviments::neteja() {
+ 	while (!esBuida()) {
+		treuMoviment();
+	}
 }
-void CuaMoviments::afegeixMoviment(const string& origen, const string& desti) 
+
+Moviment CuaMoviments::getPrimer() const {
+	if (m_primer != nullptr) {
+		return m_primer->moviment;
+	}
+	return Moviment();
+}
+
+Moviment CuaMoviments::getUltim() const {
+	if (m_ultim != nullptr) {
+		return m_ultim->moviment;
+	}
+	return Moviment();
+}
+
+void CuaMoviments::afegeixMoviment(const string& origen, const string& desti)
 {
-	Moviment mov; 
+	Moviment mov;
 	Posicio posOrigen(origen); // Utilitza constructor de Posicio amb string 
-	Posicio posDesti(desti); 
+	Posicio posDesti(desti);
 
-	mov.afegirPosicio(posOrigen); 
-	mov.afegirPosicio(posDesti); 
+	mov.afegirPosicio(posOrigen);
+	mov.afegirPosicio(posDesti);
 
-	NodeMoviment* nouNode = new NodeMoviment; 
-	nouNode->moviment = mov; 
-	nouNode->seguent = nullptr; 
+	NodeMoviment* nouNode = new NodeMoviment();
+	nouNode->moviment = mov;
+	nouNode->seguent = nullptr;
 
 	if (esBuida())
-		m_primer = nouNode; 
+		m_primer = nouNode;
 	else
-		m_ultim->seguent = nouNode; 
-	m_ultim = nouNode; 
+		m_ultim->seguent = nouNode;
+	m_ultim = nouNode;
 }
 
-Moviment CuaMoviments::treuMoviment() 
+Moviment CuaMoviments::treuMoviment()
 {
 	if (esBuida()) return Moviment();
 
@@ -38,31 +54,22 @@ Moviment CuaMoviments::treuMoviment()
 	return moviment;
 }
 
-void CuaMoviments::guardaMoviments(const string& nomFitxer) const 
+void CuaMoviments::guardaMoviments(const string& nomFitxer) const
 {
 	ofstream fitxer(nomFitxer);
 	if (fitxer.is_open()) {
-		NodeMoviment* actual = m_primer;
+		NodeMoviment* actual = m_primer; 
 		while (actual != nullptr) {
-			for (int i = 0; i < actual->moviment.getNumPosicions(); ++i) {
-				Posicio pos = actual->moviment.getPosicio(i);
-				fitxer << pos.getFila() << " " << pos.getColumna() << " ";
-			}
-			fitxer << "\n";
-			actual = actual->seguent;
-		}
-	}
-}
+			Posicio origen = actual->moviment.getPosicio(0);  
+			Posicio desti = actual->moviment.getPosicio(1);  
 
-void CuaMoviments::carregaMoviments(const string& nomFitxer) 
-{
-	neteja();
-	ifstream fitxer(nomFitxer);
-	if (fitxer.is_open()) {
-		string origen, desti;
-		while (fitxer >> origen >> desti) {
-			afegeixMoviment(origen, desti);
+			fitxer << origen << " " << desti << endl;  
+
+			actual = actual->seguent;  
 		}
+		fitxer.close(); 
+	} 
+	else {
+		cout << "Error al obrir el fitxer. " << endl; // No ho mostrem en el tauler 
 	}
-	fitxer.close();
 }
