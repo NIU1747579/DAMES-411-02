@@ -32,8 +32,7 @@ public:
 	bool esBuida() const { return (tipus_Fitxa == TIPUS_EMPTY); } // Per comprovar si la casella esta buida
 	void netejaMovimentsValids();
 	void afegeixMovimentValid(const Moviment& moviment);
-	const vector<Moviment>& getMovimentValid(const Moviment& moviment){ 
-		m_movimentsValids.push_back(moviment); }
+	const vector<Moviment>& getMovimentValid(const Moviment& moviment){ m_movimentsValids.push_back(moviment); }
 	void visualitzaFitxa(float x, float y) const;
 
 private:
