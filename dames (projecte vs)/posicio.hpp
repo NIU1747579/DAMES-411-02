@@ -16,7 +16,9 @@ public:
 	Posicio() : m_fila(0), m_columna(0) {}
 	Posicio(int fila, int columna) { m_fila = fila, m_columna = columna; }
 	Posicio(const string& posicioString);
-
+	bool esDinsDelTauler() const {
+		return (m_fila >= 0 && m_fila < N_FILES && m_columna >= 0 && m_columna < N_COLUMNES);
+	}
 
 	int getFila()const { return m_fila; }
 	int getColumna()const { return m_columna; }
